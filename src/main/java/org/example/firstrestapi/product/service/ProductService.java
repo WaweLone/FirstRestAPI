@@ -5,6 +5,7 @@ import org.example.firstrestapi.product.api.request.ProductRequest;
 import org.example.firstrestapi.product.api.response.ProductResponse;
 import org.example.firstrestapi.product.domain.Product;
 import org.example.firstrestapi.product.repository.ProductRepository;
+import org.example.firstrestapi.product.support.ProductExceptionSupplier;
 import org.example.firstrestapi.product.support.ProductMapper;
 
 @Service
@@ -24,7 +25,7 @@ public class ProductService {
     }
 
     public ProductResponse find(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(RuntimeException::new);
+        Product product = productRepository.findById(id).orElseThrow(ProductExceptionSupplier.productNotFound(id));
         return productMapper.toProductResponse(product);
     }
 }
