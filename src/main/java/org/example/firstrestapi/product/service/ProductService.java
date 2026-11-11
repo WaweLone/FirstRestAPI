@@ -2,6 +2,7 @@ package org.example.firstrestapi.product.service;
 
 import org.springframework.stereotype.Service;
 import org.example.firstrestapi.product.api.request.ProductRequest;
+import org.example.firstrestapi.product.api.request.UpdateProductRequest;
 import org.example.firstrestapi.product.api.response.ProductResponse;
 import org.example.firstrestapi.product.domain.Product;
 import org.example.firstrestapi.product.repository.ProductRepository;
@@ -26,6 +27,12 @@ public class ProductService {
 
     public ProductResponse find(Long id) {
         Product product = productRepository.findById(id).orElseThrow(ProductExceptionSupplier.productNotFound(id));
+        return productMapper.toProductResponse(product);
+    }
+
+    public ProductResponse update(Long id, UpdateProductRequest updateProductRequest) {
+        Product product = productRepository.findById(id).orElseThrow(ProductExceptionSupplier.productNotFound(id));
+        productRepository.save(productMapper.toProduct(product, updateProductRequest));
         return productMapper.toProductResponse(product);
     }
 }
