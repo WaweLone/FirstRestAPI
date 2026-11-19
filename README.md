@@ -104,16 +104,16 @@ A PUT request to `/api/v1/products/1` with a new name changes the product and re
 
 ### Delete a product
 
-A DELETE request to `/api/v1/products/1` removes the product. The response has status 204 and no body.
+A DELETE request to `/api/v1/products/{id}` removes the product. In the example below, product 2 is deleted. The response has status 204 and no body.
 
 ![Delete a product](docs/screenshots/06-delete-product.png)
 
 ### Error handling
 
-If a product with the given id does not exist (for GET, PUT or DELETE), the API returns status 404 with a message:
+If a product with the given id does not exist (for GET, PUT or DELETE), the API returns status 404 with a message. For example, trying to delete product 1 again after it was already deleted returns:
 
 ```json
-{ "message": "Product with 999 not found" }
+{ "message": "Product with 1 not found" }
 ```
 
 This is handled by `ProductExceptionAdvisor`, which catches `ProductNotFoundException` and turns it into a clean JSON response instead of a stack trace.
